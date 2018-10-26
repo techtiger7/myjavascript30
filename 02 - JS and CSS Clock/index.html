@@ -6,31 +6,44 @@
 </head>
 <body>
 
-
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+    <div class="clock-container">
+      <div class="clock">
+        <div class="clock-face">
+          <div class="hand hour-hand"></div>
+          <div class="hand min-hand"></div>
+          <div class="hand second-hand"></div>
+        </div>
       </div>
+    </div>
+    <div class="countdown">
     </div>
 
 
   <style>
+
+    * {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     html {
       background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
       background-size: cover;
-      font-family: 'helvetica neue';
       text-align: center;
       font-size: 10px;
     }
 
     body {
+      min-height: 100vh;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .clock-container {
       margin: 0;
       font-size: 2rem;
       display: flex;
-      flex: 1;
-      min-height: 100vh;
       align-items: center;
     }
 
@@ -66,7 +79,11 @@
       transform: rotate(90deg);
       transition: all 0.2s;
       transition-timing-function: cubic-bezier(0, 2.32, 0.58, 1);
+    }
 
+    .countdown {
+      font-size: 42px;
+      color: white;
     }
 
   </style>
@@ -93,7 +110,30 @@
       hourHand.style.transform = `rotate(${hourDegrees}deg)`
     }
 
-    setInterval(setDate, 1000)
+    function displayCountDown(endDate){
+      var targetDateTime = Date.parse(endDate);
+      var currentDateTime = Date.parse(new Date());
+
+      var milliseconds = (targetDateTime - currentDateTime);
+
+      var seconds = parseInt((milliseconds / 1000) % 60),
+          minutes = parseInt((milliseconds / (1000 * 60)) % 60),
+          hours = parseInt((milliseconds / (1000 * 60 * 60)) % 24),
+          days = parseInt((milliseconds / (1000 * 60 * 60)) / 24)
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+      const countDown = document.querySelector('.countdown')
+
+      countDown.innerHTML = (days + ((days > 1) ? " days, " : " day, ") 
+                  + hours + ((hours > 1) ? " hours, " : " hour, ") 
+                  + minutes + ((minutes > 1) ? " mins, " : " min, ") 
+                  + seconds + ((seconds > 1) ? " secs, " : " sec, "));
+    }
+
+    setInterval(() => { setDate(); displayCountDown("2018 Dec 29, 06:00:00 GMT"); }, 1000)
 
   </script>
 </body>
