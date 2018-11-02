@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log("Hello I am a string.")
+
+    // Interpolated
+    console.log("Hello I am a %s.", "string")
+
+    // Styled
+    console.log("%cStyled Comments, WTF!?", "font-size: 50px; background: red;")
+
+    // warning!
+    console.warn("Oh No!")
+
+    // Error :|
+    console.error("An error was detected.")
+
+    // Info
+    console.info("HTTP Response 418")
+
+    // Testing
+    const p = document.querySelector('p')
+    console.assert(p.classList.contains('ouch'), "There is no 'ouch' in this paragraph")
+    console.assert(1 === 3, "1 is NOT equal to 3")
+
+    // clearing
+    console.clear();
+
+    // Viewing DOM Elements
+    console.log(p) // Prints out the element as it is displayed in the HTML
+    console.dir(p) // Allows accessing of element attributes in console
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name.toUpperCase()}`)
+      console.log(`This is ${dog.name}`)
+      console.log(`${dog.name} is ${dog.age} years old`)
+      console.log(`${dog.name} is ${dog.age * 7} dog-years old`)
+      console.groupEnd(`${dog.name}`)
+    })
+
+    // counting
+    console.count('Tom')
+    console.count('Tom')
+    console.count('Tom')
+    console.count('Jana')
+    console.count('Jana')
+    console.count('Jana')
+    console.count('Tom')
+    console.count('Tom')
+    console.count('Jana')
+
+    // timing
+    console.time("fetching data")
+    fetch("https://api.github.com/users/techtiger7")
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd("fetching data")
+        console.table(data)
+      })
+  </script>
+</body>
+</html>
